@@ -34,21 +34,22 @@ public:
     QCheckBox *checkBoxAutoDetection;
     QLabel *label_16;
     QSpinBox *spinBoxGrammarID;
+    QCheckBox *checkBoxOptimization;
 
     void setupUi(QDialog *ParameterEstimationDialog)
     {
         if (ParameterEstimationDialog->objectName().isEmpty())
             ParameterEstimationDialog->setObjectName(QStringLiteral("ParameterEstimationDialog"));
-        ParameterEstimationDialog->resize(522, 120);
+        ParameterEstimationDialog->resize(522, 149);
         lineEditFacadeImage = new QLineEdit(ParameterEstimationDialog);
         lineEditFacadeImage->setObjectName(QStringLiteral("lineEditFacadeImage"));
         lineEditFacadeImage->setGeometry(QRect(100, 10, 371, 20));
         pushButtonCancel = new QPushButton(ParameterEstimationDialog);
         pushButtonCancel->setObjectName(QStringLiteral("pushButtonCancel"));
-        pushButtonCancel->setGeometry(QRect(420, 80, 91, 31));
+        pushButtonCancel->setGeometry(QRect(410, 110, 91, 31));
         pushButtonOK = new QPushButton(ParameterEstimationDialog);
         pushButtonOK->setObjectName(QStringLiteral("pushButtonOK"));
-        pushButtonOK->setGeometry(QRect(320, 80, 91, 31));
+        pushButtonOK->setGeometry(QRect(300, 110, 91, 31));
         label_15 = new QLabel(ParameterEstimationDialog);
         label_15->setObjectName(QStringLiteral("label_15"));
         label_15->setGeometry(QRect(270, 40, 101, 20));
@@ -66,6 +67,9 @@ public:
         spinBoxGrammarID = new QSpinBox(ParameterEstimationDialog);
         spinBoxGrammarID->setObjectName(QStringLiteral("spinBoxGrammarID"));
         spinBoxGrammarID->setGeometry(QRect(380, 40, 51, 22));
+        checkBoxOptimization = new QCheckBox(ParameterEstimationDialog);
+        checkBoxOptimization->setObjectName(QStringLiteral("checkBoxOptimization"));
+        checkBoxOptimization->setGeometry(QRect(20, 70, 211, 21));
         QWidget::setTabOrder(lineEditFacadeImage, pushButtonOK);
         QWidget::setTabOrder(pushButtonOK, pushButtonCancel);
 
@@ -83,6 +87,7 @@ public:
         pushButtonFacadeImage->setText(QApplication::translate("ParameterEstimationDialog", "...", 0));
         checkBoxAutoDetection->setText(QApplication::translate("ParameterEstimationDialog", "Automatic detection of grammar ID", 0));
         label_16->setText(QApplication::translate("ParameterEstimationDialog", "Facade image:", 0));
+        checkBoxOptimization->setText(QApplication::translate("ParameterEstimationDialog", "Numerical Optimization", 0));
     } // retranslateUi
 
 };

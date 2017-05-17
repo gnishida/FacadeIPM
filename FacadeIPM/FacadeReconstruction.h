@@ -25,7 +25,7 @@ namespace facarec {
 	};
 
 	int recognition(boost::shared_ptr<Classifier> classifier, const cv::Mat& input_image, int mass_grammar_id);
-	std::vector<float> parameterEstimation(int grammar_id, boost::shared_ptr<Regression> regression, const cv::Mat& input_image, float width, float height, int num_floors, int num_columns, const cv::Mat& initial_facade_parsing, std::vector<int>& selected_win_types);
+	std::vector<float> parameterEstimation(int grammar_id, boost::shared_ptr<Regression> regression, const cv::Mat& input_image, float width, float height, int num_floors, int num_columns, const cv::Mat& initial_facade_parsing, std::vector<int>& selected_win_types, bool optimization);
 	std::vector<float> parameterEstimation1(float scale, float width, float height, int num_floors, int num_columns, std::vector<float> params, std::vector<int> selected_win_types, int thickness, const cv::Scalar& bg_color, const cv::Scalar& fg_color, cv::Mat& result_img);
 	std::vector<float> parameterEstimation2(float scale, float width, float height, int num_floors, int num_columns, std::vector<float> params, std::vector<int> selected_win_types, int thickness, const cv::Scalar& bg_color, const cv::Scalar& fg_color, cv::Mat& result_img);
 	std::vector<float> parameterEstimation3(float scale, float width, float height, int num_floors, int num_columns, std::vector<float> params, std::vector<int> selected_win_types, int thickness, const cv::Scalar& bg_color, const cv::Scalar& fg_color, cv::Mat& result_img);

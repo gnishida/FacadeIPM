@@ -25,7 +25,7 @@ namespace facarec {
 	double obj_function::operator() (const column_vector& arg) const {
 		std::vector<float> params;
 		for (int k = 0; k < arg.size(); ++k) {
-			params.push_back(arg(k, 0));
+			params.push_back(std::max(0.0, arg(k, 0)));
 		}
 
 		cv::Mat result_img;
@@ -53,6 +53,9 @@ namespace facarec {
 		else if (grammar_id == 7) {
 			parameterEstimation8(1, initial_facade_parsing.cols, initial_facade_parsing.rows, num_floors, num_columns, params, selected_win_types, -1, cv::Scalar(255, 255, 255), cv::Scalar(0, 0, 0), result_img);
 		}
+
+		//cv::imwrite("temp.png", result_img);
+		//cv::imwrite("temp2.png", initial_facade_parsing);
 
 		// TODO
 		// calculate the distance between facade_dist_map and result_dist_map
@@ -87,40 +90,50 @@ namespace facarec {
 		return 0;
 	}
 
-	std::vector<float> parameterEstimation(int grammar_id, boost::shared_ptr<Regression> regression, const cv::Mat& input_image, float width, float height, int num_floors, int num_columns, const cv::Mat& initial_facade_parsing, std::vector<int>& selected_win_types) {
+	std::vector<float> parameterEstimation(int grammar_id, boost::shared_ptr<Regression> regression, const cv::Mat& input_image, float width, float height, int num_floors, int num_columns, const cv::Mat& initial_facade_parsing, std::vector<int>& selected_win_types, bool optimization) {
 		std::vector<float> params = regression->Predict(input_image);
+		for (int i = 2; i < params.size(); i++) {
+			params[i] = std::max(0.0f, params[i]);
+		}
+		utils::output_vector(params);
 
-#if 1
-		/////////////////////////////////////////////////////////////////////////////
-		// refine the parameters based on the initial facade parsing
-		column_vector starting_point(params.size());
-		column_vector lower_bound(params.size());
-		column_vector upper_bound(params.size());
-		for (int k = 0; k < params.size(); ++k) {
-			starting_point(k, 0) = params[k];
-			lower_bound(k, 0) = params[k] - 0.1;
-			upper_bound(k, 0) = params[k] + 0.1;
+		if (optimization) {
+			/////////////////////////////////////////////////////////////////////////////
+			// refine the parameters based on the initial facade parsing
+			column_vector starting_point(params.size());
+			column_vector lower_bound(params.size());
+			column_vector upper_bound(params.size());
+			for (int k = 0; k < params.size(); ++k) {
+				starting_point(k, 0) = params[k];
+				lower_bound(k, 0) = params[k] - 0.1;
+				upper_bound(k, 0) = params[k] + 0.1;
+			}
+
+			try {
+				double dist = find_min_bobyqa(obj_function(grammar_id, initial_facade_parsing, num_floors, num_columns, selected_win_types),
+					starting_point,
+					params.size() * 4,
+					lower_bound,
+					upper_bound,
+					0.03,
+					0.001,
+					3000
+					);
+				std::cout << "Final dist after optimization: " << dist << std::endl;
+			}
+			catch (std::exception& e) {
+				std::cout << e.what() << std::endl;
+			}
+
+			for (int k = 0; k < params.size(); ++k) {
+				params[k] = starting_point(k, 0);
+			}
 		}
 
-		try {
-			find_min_bobyqa(obj_function(grammar_id, initial_facade_parsing, num_floors, num_columns, selected_win_types),
-				starting_point,
-				params.size() * 4,
-				lower_bound,
-				upper_bound,
-				0.03,
-				0.001,
-				3000
-				);
-		}
-		catch (std::exception& e) {
-			std::cout << e.what() << std::endl;
+		for (int i = 2; i < params.size(); i++) {
+			params[i] = std::max(0.0f, params[i]);
 		}
 
-		for (int k = 0; k < params.size(); ++k) {
-			params[k] = starting_point(k, 0);
-		}
-#endif
 
 		if (grammar_id == 0) {
 			FacadeA::attachDoors(params, selected_win_types);

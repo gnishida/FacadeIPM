@@ -16,7 +16,7 @@ void Canvas::paintEvent(QPaintEvent *event) {
 		QPainter painter(this);
 		painter.drawImage(0, 0, image);
 
-		painter.setPen(QPen(QColor(255, 255, 0), 3));
+		painter.setPen(QPen(QColor(255, 255, 0, 128), 3));
 		for (int i = 0; i < y_splits.size() - 1; ++i) {
 			for (int j = 0; j < x_splits.size() - 1; ++j) {
 				if (win_rects[i][j].valid) {

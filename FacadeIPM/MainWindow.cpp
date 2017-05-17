@@ -227,7 +227,7 @@ void MainWindow::onParameterEstimation() {
 
 
 	// parameter estimation
-	std::vector<float> predicted_params = facarec::parameterEstimation(facade_id, fac_regressions[facade_id], input_img, facade_img.cols, facade_img.rows, num_floors, num_columns, initial_facade_parsing, selected_win_types);
+	std::vector<float> predicted_params = facarec::parameterEstimation(facade_id, fac_regressions[facade_id], input_img, facade_img.cols, facade_img.rows, num_floors, num_columns, initial_facade_parsing, selected_win_types, dlg.ui.checkBoxOptimization->isChecked());
 	utils::output_vector(predicted_params);
 
 	// generate final facade parsing image

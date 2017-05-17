@@ -5,7 +5,7 @@ std::pair<int, int> FacadeG::range_NF = std::make_pair(6, 20);
 std::pair<int, int> FacadeG::range_NC = std::make_pair(5, 20);
 
 void FacadeG::attachDoors(std::vector<float>& params, const std::vector<int>& selected_win_types) {
-	if (selected_win_types[6] < 25) {
+	if (selected_win_types[7] < 25) {
 		// do nothing
 	}
 	else {
@@ -13,7 +13,7 @@ void FacadeG::attachDoors(std::vector<float>& params, const std::vector<int>& se
 		params[21] = 0;
 	}
 
-	if (selected_win_types[5] < 25) {
+	if (selected_win_types[6] < 25) {
 		// do nothing
 	}
 	else {
@@ -63,7 +63,7 @@ void FacadeG::decodeParams(float width, float height, int num_floors, int num_co
 	float WI2 = SW / (params[16] + params[17] + params[18]) * params[18];
 
 	float DT, DH, DB;
-	if (selected_win_types[6] < 25) {
+	if (selected_win_types[7] < 25) {
 		DT = GH / (params[19] + params[20] + params[21]) * params[19];
 		DH = GH / (params[19] + params[20] + params[21]) * params[20];
 		DB = GH / (params[19] + params[20] + params[21]) * params[21];
@@ -75,7 +75,7 @@ void FacadeG::decodeParams(float width, float height, int num_floors, int num_co
 		DB = 0.0f;
 	}
 	float DT2, DH2, DB2;
-	if (selected_win_types[5] < 25) {
+	if (selected_win_types[6] < 25) {
 		DT2 = GH / (params[22] + params[23] + params[24]) * params[22];
 		DH2 = GH / (params[22] + params[23] + params[24]) * params[23];
 		DB2 = GH / (params[22] + params[23] + params[24]) * params[24];

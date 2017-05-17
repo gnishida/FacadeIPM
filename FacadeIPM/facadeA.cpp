@@ -5,7 +5,14 @@ std::pair<int, int> FacadeA::range_NF = std::make_pair(1, 20);
 std::pair<int, int> FacadeA::range_NC = std::make_pair(1, 20);
 
 void FacadeA::attachDoors(std::vector<float>& params, const std::vector<int>& selected_win_types) {
-	// do nothing
+	int NF = std::round(params[0] * (range_NF.second - range_NF.first) + range_NF.first);
+	if (NF > 1 || selected_win_types[0] < 25) {
+		// do nothing
+	}
+	else {
+		// remove the gap between the door and the ground
+		params[9] = 0;
+	}
 }
 
 cv::Mat FacadeA::generateFacade(int width, int height, int thickness, int num_floors, int num_columns, const std::vector<float>& params, std::vector<int>& selected_win_types, const cv::Scalar& bg_color, const cv::Scalar& fg_color) {

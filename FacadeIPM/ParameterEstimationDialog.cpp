@@ -6,6 +6,7 @@ ParameterEstimationDialog::ParameterEstimationDialog(QWidget *parent) : QDialog(
 
 	ui.checkBoxAutoDetection->setChecked(true);
 	ui.spinBoxGrammarID->setRange(1, 8);
+	ui.checkBoxOptimization->setChecked(true);
 
 	connect(ui.pushButtonFacadeImage, SIGNAL(clicked()), this, SLOT(onFacadeImage()));
 	connect(ui.pushButtonOK, SIGNAL(clicked()), this, SLOT(onOK()));

@@ -5,12 +5,21 @@ std::pair<int, int> FacadeE::range_NF = std::make_pair(1, 20);
 std::pair<int, int> FacadeE::range_NC = std::make_pair(5, 20);
 
 void FacadeE::attachDoors(std::vector<float>& params, const std::vector<int>& selected_win_types) {
-	if (selected_win_types[2] < 25) {
+	int NF = std::round(params[0] * (range_NF.second - range_NF.first) + range_NF.first);
+	if (NF > 1 || selected_win_types[1] < 25) {
 		// do nothing
 	}
 	else {
 		// remove the gap between the door and the ground
-		params[15] = 0;
+		params[9] = 0;
+	}
+
+	if (NF > 1 || selected_win_types[0] < 25) {
+		// do nothing
+	}
+	else {
+		// remove the gap between the door and the ground
+		params[14] = 0;
 	}
 }
 

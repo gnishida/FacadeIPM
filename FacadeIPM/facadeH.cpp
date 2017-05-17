@@ -86,7 +86,7 @@ void FacadeH::decodeParams(float width, float height, int num_floors, int num_co
 		// remove the gap between the door and the ground
 		DT2 = GH / (params[21] + params[22]) * params[21];
 		DH2 = GH / (params[21] + params[22]) * params[22];
-		DB = 0.0f;
+		DB2 = 0.0f;
 	}
 
 	decoded_params.resize(22);
