@@ -69,6 +69,13 @@ void FacadeC::decodeParams(float width, float height, int num_floors, int num_co
 	float TWS = TW / (params[21] * 2 + params[22]) * params[21];
 	float TWW = TW / (params[21] * 2 + params[22]) * params[22];
 
+	////////////////////////////////////////////////////////////////////////////////////////////
+	// HACK:
+	// For cylinder, remove the side margin
+	if (mass_grammar_id == 1) {
+		SW = 0.0f;
+	}
+
 	decoded_params.resize(21);
 	decoded_params[0] = GH;
 	decoded_params[1] = FH;

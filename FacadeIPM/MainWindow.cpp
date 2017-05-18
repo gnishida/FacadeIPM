@@ -85,22 +85,6 @@ void MainWindow::onParameterEstimation() {
 	std::cout << "----------------------------------------------" << std::endl;
 	//////////////////////////////////////////////////////////////////////////////////
 
-	//////////////////////////////////////////////////////////////////////////////////
-	// DEBUG
-	/*
-	QFileInfo file_info(filename);
-	for (int i = 0; i < y_splits.size() - 1; i++) {
-		for (int j = 0; j < x_splits.size() - 1; j++) {
-			cv::Mat tile_img(facade_img, cv::Rect(x_splits[j], y_splits[i], x_splits[j + 1] - x_splits[j] + 1, y_splits[i + 1] - y_splits[i] + 1));
-			cv::Mat tile_img_resized;
-			cv::resize(tile_img, tile_img_resized, cv::Size(227, 227));
-			QString tile_filename = QString("tiles/" + file_info.baseName() + "_%1_%2.png").arg(i, 2, 10, QChar('0')).arg(j, 2, 10, QChar('0'));
-			cv::imwrite(tile_filename.toUtf8().constData(), tile_img_resized);
-		}
-	}
-	*/
-	//////////////////////////////////////////////////////////////////////////////////
-
 	// obtain the dominant facade color
 	cv::Scalar facade_color = fs::getDominantColor(facade_img, y_splits, x_splits, win_rects, 10);
 	std::cout << "Facade color = (" << facade_color[0] << "," << facade_color[1] << "," << facade_color[2] << ")" << std::endl;

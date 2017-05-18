@@ -31,6 +31,7 @@ namespace facarec {
 		generateFacadeImage(grammar_id, initial_facade_parsing.cols, initial_facade_parsing.rows, num_floors, num_columns, params, selected_win_types, -1, cv::Scalar(255, 255, 255), cv::Scalar(0, 0, 0), result_img);
 
 		cv::imwrite("temp.png", result_img);
+		cv::imwrite("temp2.png", initial_facade_parsing);
 
 		// TODO
 		// calculate the distance between facade_dist_map and result_dist_map
@@ -55,8 +56,8 @@ namespace facarec {
 
 		for (int i = 0; i < predictions.size(); ++i) {
 			// HACK
-			// if the building mass is a cylinder shape, we use only the first 5 facade grammars as valid.
-			if (mass_grammar_id != 1 || predictions[i].first < 5) {
+			// if the building mass is a cylinder shape, we use only the first 4 facade grammars as valid.
+			if (mass_grammar_id != 1 || predictions[i].first < 4) {
 				return predictions[i].first;
 			}
 		}
