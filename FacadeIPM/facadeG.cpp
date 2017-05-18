@@ -26,7 +26,7 @@ cv::Mat FacadeG::generateFacade(int width, int height, int thickness, int num_fl
 	std::vector<float> decoded_params;
 	decodeParams(width, height, num_floors, num_columns, params, selected_win_types, decoded_params);
 
-	return generateFacade(1, width, height, thickness, bg_color, fg_color, decoded_params[0], decoded_params[1], decoded_params[2], decoded_params[3], decoded_params[4], decoded_params[5], decoded_params[6], decoded_params[7], decoded_params[8], decoded_params[9], decoded_params[10], decoded_params[11], decoded_params[12], decoded_params[13], decoded_params[14], decoded_params[15], decoded_params[16], decoded_params[17], decoded_params[18], decoded_params[19], decoded_params[20], decoded_params[21], decoded_params[22], decoded_params[23], decoded_params[24], decoded_params[25], decoded_params[26], decoded_params[27], decoded_params[28]);
+	return generateFacade(width, height, thickness, bg_color, fg_color, decoded_params[0], decoded_params[1], decoded_params[2], decoded_params[3], decoded_params[4], decoded_params[5], decoded_params[6], decoded_params[7], decoded_params[8], decoded_params[9], decoded_params[10], decoded_params[11], decoded_params[12], decoded_params[13], decoded_params[14], decoded_params[15], decoded_params[16], decoded_params[17], decoded_params[18], decoded_params[19], decoded_params[20], decoded_params[21], decoded_params[22], decoded_params[23], decoded_params[24], decoded_params[25], decoded_params[26], decoded_params[27], decoded_params[28]);
 }
 
 void FacadeG::decodeParams(float width, float height, int num_floors, int num_columns, const std::vector<float>& params, std::vector<int>& selected_win_types, std::vector<float>& decoded_params) {
@@ -291,11 +291,11 @@ cv::Mat FacadeG::generateRandomFacade(int width, int height, int thickness, std:
 	params.push_back(TWH / AH);
 	params.push_back(TWB / AH);
 
-	return generateFacade(1, width, height, thickness, GH, FH, FH2, AH, SW, TW, WT, WH, WB, WS, WW, WT2, WH2, WB2, WO2, WW2, WI2, DT, DH, DB, DT2, DH2, DB2, DO2, DW2, DI2, TWT, TWH, TWB, window_displacement, window_prob);
+	return generateFacade(width, height, thickness, GH, FH, FH2, AH, SW, TW, WT, WH, WB, WS, WW, WT2, WH2, WB2, WO2, WW2, WI2, DT, DH, DB, DT2, DH2, DB2, DO2, DW2, DI2, TWT, TWH, TWB, window_displacement, window_prob);
 }
 
-cv::Mat FacadeG::generateFacade(float scale, int width, int height, int thickness, const cv::Scalar& bg_color, const cv::Scalar& fg_color, float GH, float FH, float FH2, float AH, float SW, float TW, float WT, float WH, float WB, float WS, float WW, float WT2, float WH2, float WB2, float WO2, float WW2, float WI2, float DT, float DH, float DB, float DT2, float DH2, float DB2, float DO2, float DW2, float DI2, float TWT, float TWH, float TWB, float window_displacement, float window_prob) {
-	cv::Mat result(height * scale, width * scale, CV_8UC3, bg_color);
+cv::Mat FacadeG::generateFacade(int width, int height, int thickness, const cv::Scalar& bg_color, const cv::Scalar& fg_color, float GH, float FH, float FH2, float AH, float SW, float TW, float WT, float WH, float WB, float WS, float WW, float WT2, float WH2, float WB2, float WO2, float WW2, float WI2, float DT, float DH, float DB, float DT2, float DH2, float DB2, float DO2, float DW2, float DI2, float TWT, float TWH, float TWB, float window_displacement, float window_prob) {
+	cv::Mat result(height, width, CV_8UC3, bg_color);
 
 	int NF = std::round((float)(height - AH - GH - FH2) / FH) + 3;
 	int NC = std::round((float)(width - SW * 2) / TW) + 2;
@@ -306,10 +306,10 @@ cv::Mat FacadeG::generateFacade(float scale, int width, int height, int thicknes
 	{
 		// 左端
 		{
-			float x1 = DO2 * scale;
-			float y1 = (height - DB2 - DH2) * scale;
-			float x2 = (DO2 + DW2) * scale;
-			float y2 = (height - DB2) * scale;
+			float x1 = DO2;
+			float y1 = height - DB2 - DH2;
+			float x2 = DO2 + DW2;
+			float y2 = height - DB2;
 
 			if (window_displacement > 0) {
 				x1 += utils::genRand(-SW * window_displacement, SW * window_displacement);
@@ -324,10 +324,10 @@ cv::Mat FacadeG::generateFacade(float scale, int width, int height, int thicknes
 		}
 
 		for (int j = 0; j < NC - 2; ++j) {
-			float x1 = (SW + TW * j + WS) * scale;
-			float y1 = (height - DB - DH) * scale;
-			float x2 = (SW + TW * j + WS + WW) * scale;
-			float y2 = (height - DB) * scale;
+			float x1 = SW + TW * j + WS;
+			float y1 = height - DB - DH;
+			float x2 = SW + TW * j + WS + WW;
+			float y2 = height - DB;
 
 			if (window_displacement > 0) {
 				x1 += utils::genRand(-TW * window_displacement, TW * window_displacement);
@@ -343,10 +343,10 @@ cv::Mat FacadeG::generateFacade(float scale, int width, int height, int thicknes
 
 		// 右端
 		{
-			float x1 = (SW + TW * (NC - 2) + DI2) * scale;
-			float y1 = (height - DB2 - DH2) * scale;
-			float x2 = (SW + TW * (NC - 2) + DI2 + DW2) * scale;
-			float y2 = (height - DB2) * scale;
+			float x1 = SW + TW * (NC - 2) + DI2;
+			float y1 = height - DB2 - DH2;
+			float x2 = SW + TW * (NC - 2) + DI2 + DW2;
+			float y2 = height - DB2;
 
 			if (window_displacement > 0) {
 				x1 += utils::genRand(-SW * window_displacement, SW * window_displacement);
@@ -365,10 +365,10 @@ cv::Mat FacadeG::generateFacade(float scale, int width, int height, int thicknes
 	{
 		// 左端
 		{
-			float x1 = WO2 * scale;
-			float y1 = (height - GH - WB2 - WH2) * scale;
-			float x2 = (WO2 + WW2) * scale;
-			float y2 = (height - GH - WB2) * scale;
+			float x1 = WO2;
+			float y1 = height - GH - WB2 - WH2;
+			float x2 = WO2 + WW2;
+			float y2 = height - GH - WB2;
 
 			if (window_displacement > 0) {
 				x1 += utils::genRand(-SW * window_displacement, SW * window_displacement);
@@ -383,10 +383,10 @@ cv::Mat FacadeG::generateFacade(float scale, int width, int height, int thicknes
 		}
 
 		for (int j = 0; j < NC - 2; ++j) {
-			float x1 = (SW + TW * j + WS) * scale;
-			float y1 = (height - GH - WB2 - WH2) * scale;
-			float x2 = (SW + TW * j + WS + WW) * scale;
-			float y2 = (height - GH - WB2) * scale;
+			float x1 = SW + TW * j + WS;
+			float y1 = height - GH - WB2 - WH2;
+			float x2 = SW + TW * j + WS + WW;
+			float y2 = height - GH - WB2;
 
 			if (window_displacement > 0) {
 				x1 += utils::genRand(-TW * window_displacement, TW * window_displacement);
@@ -402,10 +402,10 @@ cv::Mat FacadeG::generateFacade(float scale, int width, int height, int thicknes
 
 		// 右端
 		{
-			float x1 = (SW + TW * (NC - 2) + WI2) * scale;
-			float y1 = (height - GH - WB2 - WH2) * scale;
-			float x2 = (SW + TW * (NC - 2) + WI2 + WW2) * scale;
-			float y2 = (height - GH - WB2) * scale;
+			float x1 = SW + TW * (NC - 2) + WI2;
+			float y1 = height - GH - WB2 - WH2;
+			float x2 = SW + TW * (NC - 2) + WI2 + WW2;
+			float y2 = height - GH - WB2;
 
 			if (window_displacement > 0) {
 				x1 += utils::genRand(-SW * window_displacement, SW * window_displacement);
@@ -424,10 +424,10 @@ cv::Mat FacadeG::generateFacade(float scale, int width, int height, int thicknes
 	for (int i = 0; i < NF - 3; ++i) {
 		// 左端
 			{
-				float x1 = WO2 * scale;
-				float y1 = (height - GH - FH2 - FH * i - WB - WH) * scale;
-				float x2 = (WO2 + WW2) * scale;
-				float y2 = (height - GH - FH2 - FH * i - WB) * scale;
+				float x1 = WO2;
+				float y1 = height - GH - FH2 - FH * i - WB - WH;
+				float x2 = WO2 + WW2;
+				float y2 = height - GH - FH2 - FH * i - WB;
 
 				if (window_displacement > 0) {
 					x1 += utils::genRand(-SW * window_displacement, SW * window_displacement);
@@ -442,10 +442,10 @@ cv::Mat FacadeG::generateFacade(float scale, int width, int height, int thicknes
 			}
 
 		for (int j = 0; j < NC - 2; ++j) {
-			float x1 = (SW + TW * j + WS) * scale;
-			float y1 = (height - GH - FH2 - FH * i - WB - WH) * scale;
-			float x2 = (SW + TW * j + WS + WW) * scale;
-			float y2 = (height - GH - FH2 - FH * i - WB) * scale;
+			float x1 = SW + TW * j + WS;
+			float y1 = height - GH - FH2 - FH * i - WB - WH;
+			float x2 = SW + TW * j + WS + WW;
+			float y2 = height - GH - FH2 - FH * i - WB;
 
 			if (window_displacement > 0) {
 				x1 += utils::genRand(-TW * window_displacement, TW * window_displacement);
@@ -461,10 +461,10 @@ cv::Mat FacadeG::generateFacade(float scale, int width, int height, int thicknes
 
 		// 右端
 		{
-			float x1 = (SW + TW * (NC - 2) + WI2) * scale;
-			float y1 = (height - GH - FH2 - FH * i - WB - WH) * scale;
-			float x2 = (SW + TW * (NC - 2) + WI2 + WW2) * scale;
-			float y2 = (height - GH - FH2 - FH * i - WB) * scale;
+			float x1 = SW + TW * (NC - 2) + WI2;
+			float y1 = height - GH - FH2 - FH * i - WB - WH;
+			float x2 = SW + TW * (NC - 2) + WI2 + WW2;
+			float y2 = height - GH - FH2 - FH * i - WB;
 
 			if (window_displacement > 0) {
 				x1 += utils::genRand(-SW * window_displacement, SW * window_displacement);
@@ -483,10 +483,10 @@ cv::Mat FacadeG::generateFacade(float scale, int width, int height, int thicknes
 	{
 		// 左端
 		{
-			float x1 = WO2 * scale;
-			float y1 = (height - GH - FH2 - FH * (NF - 3) - TWB - TWH) * scale;
-			float x2 = (WO2 + WW2) * scale;
-			float y2 = (height - GH - FH2 - FH * (NF - 3) - TWB) * scale;
+			float x1 = WO2;
+			float y1 = (height - GH - FH2 - FH * (NF - 3) - TWB - TWH);
+			float x2 = (WO2 + WW2);
+			float y2 = (height - GH - FH2 - FH * (NF - 3) - TWB);
 
 			if (window_displacement > 0) {
 				x1 += utils::genRand(-SW * window_displacement, SW * window_displacement);
@@ -501,10 +501,10 @@ cv::Mat FacadeG::generateFacade(float scale, int width, int height, int thicknes
 		}
 
 		for (int j = 0; j < NC - 2; ++j) {
-			float x1 = (SW + TW * j + WS) * scale;
-			float y1 = (height - GH - FH2 - FH * (NF - 3) - TWB - TWH) * scale;
-			float x2 = (SW + TW * j + WS + WW) * scale;
-			float y2 = (height - GH - FH2 - FH * (NF - 3) - TWB) * scale;
+			float x1 = (SW + TW * j + WS);
+			float y1 = (height - GH - FH2 - FH * (NF - 3) - TWB - TWH);
+			float x2 = (SW + TW * j + WS + WW);
+			float y2 = (height - GH - FH2 - FH * (NF - 3) - TWB);
 
 			if (window_displacement > 0) {
 				x1 += utils::genRand(-TW * window_displacement, TW * window_displacement);
@@ -520,10 +520,10 @@ cv::Mat FacadeG::generateFacade(float scale, int width, int height, int thicknes
 
 		// 右端
 		{
-			float x1 = (SW + TW * (NC - 2) + WI2) * scale;
-			float y1 = (height - GH - FH2 - FH * (NF - 3) - TWB - TWH) * scale;
-			float x2 = (SW + TW * (NC - 2) + WI2 + WW2) * scale;
-			float y2 = (height - GH - FH2 - FH * (NF - 3) - TWB) * scale;
+			float x1 = (SW + TW * (NC - 2) + WI2);
+			float y1 = (height - GH - FH2 - FH * (NF - 3) - TWB - TWH);
+			float x2 = (SW + TW * (NC - 2) + WI2 + WW2);
+			float y2 = (height - GH - FH2 - FH * (NF - 3) - TWB);
 
 			if (window_displacement > 0) {
 				x1 += utils::genRand(-SW * window_displacement, SW * window_displacement);

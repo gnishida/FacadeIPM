@@ -143,7 +143,7 @@ void MainWindow::onParameterEstimation() {
 	//////////////////////////////////////////////////////////////////////////////////////////
 	// HACK:
 	// refine the #floors / #columns
-	for (int i = 0; i < y_splits.size() - 1; ++i) {
+	for (int i = 0; i < y_splits.size() - 1; ) {
 		int win_nums = 0;
 		for (int j = 0; j < x_splits.size() - 1; ++j) {
 			if (win_rects[i][j].valid) win_nums++;
@@ -156,6 +156,16 @@ void MainWindow::onParameterEstimation() {
 				win_rects[i][j].valid = fs::WindowPos::INVALID;
 			}
 			num_floors--;
+			if (i < y_splits.size() - 2) {
+				y_splits.erase(y_splits.begin() + i + 1);
+			}
+			else {
+				y_splits.erase(y_splits.begin() + i);
+			}
+			win_rects.erase(win_rects.begin() + i);
+		}
+		else {
+			i++;
 		}
 	}
 	for (int j = 0; j < x_splits.size() - 1; ++j) {
@@ -227,7 +237,7 @@ void MainWindow::onParameterEstimation() {
 
 
 	// parameter estimation
-	std::vector<float> predicted_params = facarec::parameterEstimation(facade_id, fac_regressions[facade_id], input_img, facade_img.cols, facade_img.rows, num_floors, num_columns, initial_facade_parsing, selected_win_types, dlg.ui.checkBoxOptimization->isChecked());
+	std::vector<float> predicted_params = facarec::parameterEstimation(facade_id, fac_regressions[facade_id], input_img, facade_img.cols, facade_img.rows, num_floors, num_columns, initial_facade_parsing, selected_win_types);
 	utils::output_vector(predicted_params);
 
 	// generate final facade parsing image
