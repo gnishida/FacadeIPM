@@ -29,28 +29,28 @@ namespace facarec {
 
 		cv::Mat result_img;
 		if (grammar_id == 0) {
-			parameterEstimation1(initial_facade_parsing.cols, initial_facade_parsing.rows, num_floors, num_columns, params, selected_win_types, -1, cv::Scalar(255, 255, 255), cv::Scalar(0, 0, 0), result_img);
+			result_img = FacadeA::generateFacade(initial_facade_parsing.cols, initial_facade_parsing.rows, -1, num_floors, num_columns, params, selected_win_types, cv::Scalar(255, 255, 255), cv::Scalar(0, 0, 0));
 		}
 		else if (grammar_id == 1) {
-			parameterEstimation2(initial_facade_parsing.cols, initial_facade_parsing.rows, num_floors, num_columns, params, selected_win_types, -1, cv::Scalar(255, 255, 255), cv::Scalar(0, 0, 0), result_img);
+			result_img = FacadeB::generateFacade(initial_facade_parsing.cols, initial_facade_parsing.rows, -1, num_floors, num_columns, params, selected_win_types, cv::Scalar(255, 255, 255), cv::Scalar(0, 0, 0));
 		}
 		else if (grammar_id == 2) {
-			parameterEstimation3(initial_facade_parsing.cols, initial_facade_parsing.rows, num_floors, num_columns, params, selected_win_types, -1, cv::Scalar(255, 255, 255), cv::Scalar(0, 0, 0), result_img);
+			result_img = FacadeC::generateFacade(initial_facade_parsing.cols, initial_facade_parsing.rows, -1, num_floors, num_columns, params, selected_win_types, cv::Scalar(255, 255, 255), cv::Scalar(0, 0, 0));
 		}
 		else if (grammar_id == 3) {
-			parameterEstimation4(initial_facade_parsing.cols, initial_facade_parsing.rows, num_floors, num_columns, params, selected_win_types, -1, cv::Scalar(255, 255, 255), cv::Scalar(0, 0, 0), result_img);
+			result_img = FacadeD::generateFacade(initial_facade_parsing.cols, initial_facade_parsing.rows, -1, num_floors, num_columns, params, selected_win_types, cv::Scalar(255, 255, 255), cv::Scalar(0, 0, 0));
 		}
 		else if (grammar_id == 4) {
-			parameterEstimation5(initial_facade_parsing.cols, initial_facade_parsing.rows, num_floors, num_columns, params, selected_win_types, -1, cv::Scalar(255, 255, 255), cv::Scalar(0, 0, 0), result_img);
+			result_img = FacadeE::generateFacade(initial_facade_parsing.cols, initial_facade_parsing.rows, -1, num_floors, num_columns, params, selected_win_types, cv::Scalar(255, 255, 255), cv::Scalar(0, 0, 0));
 		}
 		else if (grammar_id == 5) {
-			parameterEstimation6(initial_facade_parsing.cols, initial_facade_parsing.rows, num_floors, num_columns, params, selected_win_types, -1, cv::Scalar(255, 255, 255), cv::Scalar(0, 0, 0), result_img);
+			result_img = FacadeF::generateFacade(initial_facade_parsing.cols, initial_facade_parsing.rows, -1, num_floors, num_columns, params, selected_win_types, cv::Scalar(255, 255, 255), cv::Scalar(0, 0, 0));
 		}
 		else if (grammar_id == 6) {
-			parameterEstimation7(initial_facade_parsing.cols, initial_facade_parsing.rows, num_floors, num_columns, params, selected_win_types, -1, cv::Scalar(255, 255, 255), cv::Scalar(0, 0, 0), result_img);
+			result_img = FacadeG::generateFacade(initial_facade_parsing.cols, initial_facade_parsing.rows, -1, num_floors, num_columns, params, selected_win_types, cv::Scalar(255, 255, 255), cv::Scalar(0, 0, 0));
 		}
 		else if (grammar_id == 7) {
-			parameterEstimation8(initial_facade_parsing.cols, initial_facade_parsing.rows, num_floors, num_columns, params, selected_win_types, -1, cv::Scalar(255, 255, 255), cv::Scalar(0, 0, 0), result_img);
+			result_img = FacadeH::generateFacade(initial_facade_parsing.cols, initial_facade_parsing.rows, -1, num_floors, num_columns, params, selected_win_types, cv::Scalar(255, 255, 255), cv::Scalar(0, 0, 0));
 		}
 
 		cv::imwrite("temp.png", result_img);
@@ -159,78 +159,6 @@ namespace facarec {
 		}
 
 		return params;
-	}
-
-	std::vector<float> parameterEstimation1(float width, float height, int num_floors, int num_columns, const std::vector<float> params, const std::vector<int> selected_win_types, int thickness, const cv::Scalar& bg_color, const cv::Scalar& fg_color, cv::Mat& result_img) {
-		std::vector<float> decoded_params;
-		FacadeA::decodeParams(width, height, num_floors, num_columns, params, selected_win_types, decoded_params);
-
-		result_img = FacadeA::generateFacade(width, height, thickness, bg_color, fg_color, decoded_params[0], decoded_params[1], decoded_params[2], decoded_params[3], decoded_params[4], decoded_params[5], decoded_params[6], decoded_params[7], decoded_params[8], decoded_params[9]);
-
-		return decoded_params;
-	}
-
-	std::vector<float> parameterEstimation2(float width, float height, int num_floors, int num_columns, const std::vector<float> params, const std::vector<int> selected_win_types, int thickness, const cv::Scalar& bg_color, const cv::Scalar& fg_color, cv::Mat& result_img) {
-		std::vector<float> decoded_params;
-		FacadeB::decodeParams(width, height, num_floors, num_columns, params, selected_win_types, decoded_params);
-
-		result_img = FacadeB::generateFacade(width, height, thickness, bg_color, fg_color, decoded_params[0], decoded_params[1], decoded_params[2], decoded_params[3], decoded_params[4], decoded_params[5], decoded_params[6], decoded_params[7], decoded_params[8], decoded_params[9], decoded_params[10], decoded_params[11], decoded_params[12], decoded_params[13], decoded_params[14], decoded_params[15]);
-
-		return decoded_params;
-	}
-
-	std::vector<float> parameterEstimation3(float width, float height, int num_floors, int num_columns, const std::vector<float> params, const std::vector<int> selected_win_types, int thickness, const cv::Scalar& bg_color, const cv::Scalar& fg_color, cv::Mat& result_img) {
-		std::vector<float> decoded_params;
-		FacadeC::decodeParams(width, height, num_floors, num_columns, params, selected_win_types, decoded_params);
-
-		result_img = FacadeC::generateFacade(width, height, thickness, bg_color, fg_color, decoded_params[0], decoded_params[1], decoded_params[2], decoded_params[3], decoded_params[4], decoded_params[5], decoded_params[6], decoded_params[7], decoded_params[8], decoded_params[9], decoded_params[10], decoded_params[11], decoded_params[12], decoded_params[13], decoded_params[14], decoded_params[15], decoded_params[16], decoded_params[17], decoded_params[18], decoded_params[19], decoded_params[20]);
-
-		return decoded_params;
-	}
-	
-	std::vector<float> parameterEstimation4(float width, float height, int num_floors, int num_columns, const std::vector<float> params, const std::vector<int> selected_win_types, int thickness, const cv::Scalar& bg_color, const cv::Scalar& fg_color, cv::Mat& result_img) {
-		std::vector<float> decoded_params;
-		FacadeD::decodeParams(width, height, num_floors, num_columns, params, selected_win_types, decoded_params);
-
-		result_img = FacadeD::generateFacade(width, height, thickness, bg_color, fg_color, decoded_params[0], decoded_params[1], decoded_params[2], decoded_params[3], decoded_params[4], decoded_params[5], decoded_params[6], decoded_params[7], decoded_params[8], decoded_params[9], decoded_params[10], decoded_params[11], decoded_params[12], decoded_params[13], decoded_params[14], decoded_params[15], decoded_params[16], decoded_params[17], decoded_params[18], decoded_params[19], decoded_params[20], decoded_params[21], decoded_params[22], decoded_params[23], decoded_params[24], decoded_params[25], decoded_params[26]);
-
-		return decoded_params;
-	}
-
-	std::vector<float> parameterEstimation5(float width, float height, int num_floors, int num_columns, const std::vector<float> params, const std::vector<int> selected_win_types, int thickness, const cv::Scalar& bg_color, const cv::Scalar& fg_color, cv::Mat& result_img) {
-		std::vector<float> decoded_params;
-		FacadeE::decodeParams(width, height, num_floors, num_columns, params, selected_win_types, decoded_params);
-
-		result_img = FacadeE::generateFacade(width, height, thickness, bg_color, fg_color, decoded_params[0], decoded_params[1], decoded_params[2], decoded_params[3], decoded_params[4], decoded_params[5], decoded_params[6], decoded_params[7], decoded_params[8], decoded_params[9], decoded_params[10], decoded_params[11], decoded_params[12], decoded_params[13], decoded_params[14], decoded_params[15]);
-
-		return decoded_params;
-	}
-
-	std::vector<float> parameterEstimation6(float width, float height, int num_floors, int num_columns, const std::vector<float> params, const std::vector<int> selected_win_types, int thickness, const cv::Scalar& bg_color, const cv::Scalar& fg_color, cv::Mat& result_img) {
-		std::vector<float> decoded_params;
-		FacadeF::decodeParams(width, height, num_floors, num_columns, params, selected_win_types, decoded_params);
-
-		result_img = FacadeF::generateFacade(width, height, thickness, bg_color, fg_color, decoded_params[0], decoded_params[1], decoded_params[2], decoded_params[3], decoded_params[4], decoded_params[5], decoded_params[6], decoded_params[7], decoded_params[8], decoded_params[9], decoded_params[10], decoded_params[11], decoded_params[12], decoded_params[13], decoded_params[14], decoded_params[15], decoded_params[16], decoded_params[17], decoded_params[18], decoded_params[19], decoded_params[20], decoded_params[21], decoded_params[22], decoded_params[23], decoded_params[24], decoded_params[25], decoded_params[26]);
-
-		return decoded_params;
-	}
-
-	std::vector<float> parameterEstimation7(float width, float height, int num_floors, int num_columns, const std::vector<float> params, const std::vector<int> selected_win_types, int thickness, const cv::Scalar& bg_color, const cv::Scalar& fg_color, cv::Mat& result_img) {
-		std::vector<float> decoded_params;
-		FacadeG::decodeParams(width, height, num_floors, num_columns, params, selected_win_types, decoded_params);
-
-		result_img = FacadeG::generateFacade(width, height, thickness, bg_color, fg_color, decoded_params[0], decoded_params[1], decoded_params[2], decoded_params[3], decoded_params[4], decoded_params[5], decoded_params[6], decoded_params[7], decoded_params[8], decoded_params[9], decoded_params[10], decoded_params[11], decoded_params[12], decoded_params[13], decoded_params[14], decoded_params[15], decoded_params[16], decoded_params[17], decoded_params[18], decoded_params[19], decoded_params[20], decoded_params[21], decoded_params[22], decoded_params[23], decoded_params[24], decoded_params[25], decoded_params[26], decoded_params[27], decoded_params[28]);
-
-		return decoded_params;
-	}
-
-	std::vector<float> parameterEstimation8(float width, float height, int num_floors, int num_columns, const std::vector<float> params, const std::vector<int> selected_win_types, int thickness, const cv::Scalar& bg_color, const cv::Scalar& fg_color, cv::Mat& result_img) {
-		std::vector<float> decoded_params;
-		FacadeH::decodeParams(width, height, num_floors, num_columns, params, selected_win_types, decoded_params);
-
-		result_img = FacadeH::generateFacade(width, height, thickness, bg_color, fg_color, decoded_params[0], decoded_params[1], decoded_params[2], decoded_params[3], decoded_params[4], decoded_params[5], decoded_params[6], decoded_params[7], decoded_params[8], decoded_params[9], decoded_params[10], decoded_params[11], decoded_params[12], decoded_params[13], decoded_params[14], decoded_params[15], decoded_params[16], decoded_params[17], decoded_params[18], decoded_params[19], decoded_params[20], decoded_params[21]);
-
-		return decoded_params;
 	}
 
 	void generateFacadeImage(int grammar_id, int width, int height, int num_floors, int num_columns, const std::vector<float>& params, const std::vector<int>& selected_win_types, int thickness, const cv::Scalar& bg_color, const cv::Scalar& fg_color, cv::Mat& image) {
