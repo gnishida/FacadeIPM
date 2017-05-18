@@ -28,5 +28,5 @@ namespace facarec {
 	std::vector<float> parameterEstimation(int grammar_id, boost::shared_ptr<Regression> regression, const cv::Mat& input_image, float width, float height, int num_floors, int num_columns, const cv::Mat& initial_facade_parsing, const std::vector<int>& selected_win_types);
 
 	void generateFacadeImage(int grammar_id, int width, int height, int num_floors, int num_columns, const std::vector<float>& params, const std::vector<int>& selected_win_types, int thickness, const cv::Scalar& bg_color, const cv::Scalar& fg_color, cv::Mat& image);
-	std::vector<float> decodeParameters(int grammar_id, float width, float height, int num_floors, int num_columns, const std::vector<float>& params, const std::vector<int>& selected_win_types);
+	std::vector<float> decodeParameters(int grammar_id, float width, float height, int num_floors, int num_columns, const std::vector<float>& params, const std::vector<int>& selected_win_types, int mass_grammar_id);
 }

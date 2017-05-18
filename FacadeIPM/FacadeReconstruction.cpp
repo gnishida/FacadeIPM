@@ -28,30 +28,7 @@ namespace facarec {
 		}
 
 		cv::Mat result_img;
-		if (grammar_id == 0) {
-			result_img = FacadeA::generateFacade(initial_facade_parsing.cols, initial_facade_parsing.rows, -1, num_floors, num_columns, params, selected_win_types, cv::Scalar(255, 255, 255), cv::Scalar(0, 0, 0));
-		}
-		else if (grammar_id == 1) {
-			result_img = FacadeB::generateFacade(initial_facade_parsing.cols, initial_facade_parsing.rows, -1, num_floors, num_columns, params, selected_win_types, cv::Scalar(255, 255, 255), cv::Scalar(0, 0, 0));
-		}
-		else if (grammar_id == 2) {
-			result_img = FacadeC::generateFacade(initial_facade_parsing.cols, initial_facade_parsing.rows, -1, num_floors, num_columns, params, selected_win_types, cv::Scalar(255, 255, 255), cv::Scalar(0, 0, 0));
-		}
-		else if (grammar_id == 3) {
-			result_img = FacadeD::generateFacade(initial_facade_parsing.cols, initial_facade_parsing.rows, -1, num_floors, num_columns, params, selected_win_types, cv::Scalar(255, 255, 255), cv::Scalar(0, 0, 0));
-		}
-		else if (grammar_id == 4) {
-			result_img = FacadeE::generateFacade(initial_facade_parsing.cols, initial_facade_parsing.rows, -1, num_floors, num_columns, params, selected_win_types, cv::Scalar(255, 255, 255), cv::Scalar(0, 0, 0));
-		}
-		else if (grammar_id == 5) {
-			result_img = FacadeF::generateFacade(initial_facade_parsing.cols, initial_facade_parsing.rows, -1, num_floors, num_columns, params, selected_win_types, cv::Scalar(255, 255, 255), cv::Scalar(0, 0, 0));
-		}
-		else if (grammar_id == 6) {
-			result_img = FacadeG::generateFacade(initial_facade_parsing.cols, initial_facade_parsing.rows, -1, num_floors, num_columns, params, selected_win_types, cv::Scalar(255, 255, 255), cv::Scalar(0, 0, 0));
-		}
-		else if (grammar_id == 7) {
-			result_img = FacadeH::generateFacade(initial_facade_parsing.cols, initial_facade_parsing.rows, -1, num_floors, num_columns, params, selected_win_types, cv::Scalar(255, 255, 255), cv::Scalar(0, 0, 0));
-		}
+		generateFacadeImage(grammar_id, initial_facade_parsing.cols, initial_facade_parsing.rows, num_floors, num_columns, params, selected_win_types, -1, cv::Scalar(255, 255, 255), cv::Scalar(0, 0, 0), result_img);
 
 		cv::imwrite("temp.png", result_img);
 
@@ -188,32 +165,32 @@ namespace facarec {
 		}
 	}
 
-	std::vector<float> decodeParameters(int grammar_id, float width, float height, int num_floors, int num_columns, const std::vector<float>& params, const std::vector<int>& selected_win_types) {
+	std::vector<float> decodeParameters(int grammar_id, float width, float height, int num_floors, int num_columns, const std::vector<float>& params, const std::vector<int>& selected_win_types, int mass_grammar_id) {
 		std::vector<float> decoded_params;
 
 		if (grammar_id == 0) {
-			FacadeA::decodeParams(width, height, num_floors, num_columns, params, selected_win_types, decoded_params);
+			FacadeA::decodeParams(width, height, num_floors, num_columns, params, selected_win_types, mass_grammar_id, decoded_params);
 		}
 		else if (grammar_id == 1) {
-			FacadeB::decodeParams(width, height, num_floors, num_columns, params, selected_win_types, decoded_params);
+			FacadeB::decodeParams(width, height, num_floors, num_columns, params, selected_win_types, mass_grammar_id, decoded_params);
 		}
 		else if (grammar_id == 2) {
-			FacadeC::decodeParams(width, height, num_floors, num_columns, params, selected_win_types, decoded_params);
+			FacadeC::decodeParams(width, height, num_floors, num_columns, params, selected_win_types, mass_grammar_id, decoded_params);
 		}
 		else if (grammar_id == 3) {
-			FacadeD::decodeParams(width, height, num_floors, num_columns, params, selected_win_types, decoded_params);
+			FacadeD::decodeParams(width, height, num_floors, num_columns, params, selected_win_types, mass_grammar_id, decoded_params);
 		}
 		else if (grammar_id == 4) {
-			FacadeE::decodeParams(width, height, num_floors, num_columns, params, selected_win_types, decoded_params);
+			FacadeE::decodeParams(width, height, num_floors, num_columns, params, selected_win_types, mass_grammar_id, decoded_params);
 		}
 		else if (grammar_id == 5) {
-			FacadeF::decodeParams(width, height, num_floors, num_columns, params, selected_win_types, decoded_params);
+			FacadeF::decodeParams(width, height, num_floors, num_columns, params, selected_win_types, mass_grammar_id, decoded_params);
 		}
 		else if (grammar_id == 6) {
-			FacadeG::decodeParams(width, height, num_floors, num_columns, params, selected_win_types, decoded_params);
+			FacadeG::decodeParams(width, height, num_floors, num_columns, params, selected_win_types, mass_grammar_id, decoded_params);
 		}
 		else if (grammar_id == 7) {
-			FacadeH::decodeParams(width, height, num_floors, num_columns, params, selected_win_types, decoded_params);
+			FacadeH::decodeParams(width, height, num_floors, num_columns, params, selected_win_types, mass_grammar_id, decoded_params);
 		}
 
 		return decoded_params;
