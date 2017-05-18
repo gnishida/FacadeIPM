@@ -576,5 +576,5 @@ int FacadeG::clusterWindowTypes(std::vector<std::vector<fs::WindowPos>>& win_rec
 		win_rects.back()[j].type = 7;
 	}
 
-	return 7;
+	return 8;
 }
