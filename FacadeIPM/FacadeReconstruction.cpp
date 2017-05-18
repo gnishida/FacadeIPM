@@ -51,18 +51,69 @@ namespace facarec {
 		return (float)diff / result_img.rows / result_img.cols;
 	}
 
-	int recognition(boost::shared_ptr<Classifier> classifier, const cv::Mat& input_image, int mass_grammar_id) {
+	int recognition(boost::shared_ptr<Classifier> classifier, const cv::Mat& input_image, int mass_grammar_id, int num_floors) {
 		std::vector<Prediction> predictions = classifier->Classify(input_image, NUM_GRAMMARS);
 
+		int facade_id = 0;
 		for (int i = 0; i < predictions.size(); ++i) {
 			// HACK
 			// if the building mass is a cylinder shape, we use only the first 4 facade grammars as valid.
 			if (mass_grammar_id != 1 || predictions[i].first < 4) {
-				return predictions[i].first;
+				facade_id = predictions[i].first;
+				break;
 			}
 		}
 
-		return 0;
+		////////////////////////////////////////////////////////////////////////////////
+		// HACK: for facade grammar recognition
+		// choose an appropriate facade grammar based on #floors
+		if (num_floors == 1) {
+			if (facade_id == 1 || facade_id == 2 || facade_id == 3) {
+				facade_id = 0;
+			}
+			else if (facade_id == 5 || facade_id == 6 || facade_id == 7) {
+				facade_id = 4;
+			}
+		}
+		else if (num_floors == 2) {
+			if (facade_id == 0) {
+				facade_id = 1;
+			}
+			else if (facade_id == 2 || facade_id == 3) {
+				facade_id = 1;
+			}
+			else if (facade_id == 4) {
+				facade_id = 5;
+			}
+			else if (facade_id == 6) {
+				facade_id = 5;
+			}
+		}
+		else if (num_floors == 3) {
+			if (facade_id == 0) {
+				facade_id = 1;
+			}
+			else if (facade_id == 3) {
+				facade_id = 2;
+			}
+			else if (facade_id == 4) {
+				facade_id = 5;
+			}
+			else if (facade_id == 6) {
+				facade_id = 5;
+			}
+		}
+		else {
+			// It is better to have different style for the 1st floor unless the number of floors is 1.
+			if (facade_id == 0) {
+				facade_id = 1;
+			}
+			else if (facade_id == 4) {
+				facade_id = 5;
+			}
+		}
+		
+		return facade_id;
 	}
 
 	std::vector<float> parameterEstimation(int grammar_id, boost::shared_ptr<Regression> regression, const cv::Mat& input_image, float width, float height, int num_floors, int num_columns, const cv::Mat& initial_facade_parsing, const std::vector<int>& selected_win_types) {

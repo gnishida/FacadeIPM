@@ -194,21 +194,63 @@ void MainWindow::onParameterEstimation() {
 	// classification
 	int facade_id;
 	if (dlg.ui.checkBoxAutoDetection->isChecked()) {
+		facade_id = facarec::recognition(fac_classifier, input_img, -1, num_floors);
+		/*
 		std::vector<Prediction> fac_predictions = fac_classifier->Classify(input_img, fac_regressions.size());
 		facade_id = fac_predictions[0].first;
 		for (int i = 0; i < fac_predictions.size(); ++i) {
 			std::cout << fac_predictions[i].first << ": " << fac_predictions[i].second << std::endl;
 		}
+
+		////////////////////////////////////////////////////////////////////////////////
 		// HACK: for facade grammar recognition
-		// It is better to have different style for the 1st floor unless the number of floors is 1.
-		if (num_floors >= 2) {
+		// choose an appropriate facade grammar based on #floors
+		if (num_floors == 1) {
+			if (facade_id == 1 || facade_id == 2 || facade_id == 3) {
+				facade_id = 0;
+			}
+			else if (facade_id == 5 || facade_id == 6 || facade_id == 7) {
+				facade_id = 4;
+			}
+		}
+		else if (num_floors == 2) {
 			if (facade_id == 0) {
 				facade_id = 1;
 			}
-			if (facade_id == 4) {
+			else if (facade_id == 2 || facade_id == 3) {
+				facade_id = 1;
+			}
+			else if (facade_id == 4) {
+				facade_id = 5;
+			}
+			else if (facade_id == 6) {
 				facade_id = 5;
 			}
 		}
+		else if (num_floors == 3) {
+			if (facade_id == 0) {
+				facade_id = 1;
+			}
+			else if (facade_id == 3) {
+				facade_id = 2;
+			}
+			else if (facade_id == 4) {
+				facade_id = 5;
+			}
+			else if (facade_id == 6) {
+				facade_id = 5;
+			}
+		}
+		else {
+			// It is better to have different style for the 1st floor unless the number of floors is 1.
+			if (facade_id == 0) {
+				facade_id = 1;
+			}
+			else if (facade_id == 4) {
+				facade_id = 5;
+			}
+		}
+		*/
 	}
 	else {
 		facade_id = dlg.ui.spinBoxGrammarID->value() - 1;
